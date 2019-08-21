@@ -1,7 +1,5 @@
-package ui;
+package model;
 
-import model.Food;
-import model.SushiRestaurant;
 import model.exceptions.RestaurantClosedException;
 
 import java.util.ArrayList;
@@ -11,18 +9,20 @@ public class TakeOutOrder {
     // Represents a takeout order
     // keeps track of items that customer orders in a list
     // has customers name
+    // has reference to sushi restaurant
     // handles user input
 
     private ArrayList<Food> orders;
-    private String name;
+    private String customerName;
+    private SushiRestaurant restaurant;
 
 
-    // EFFECTS: constructs a takeout order with customers name and empty list of items
+    // EFFECTS: constructs a takeout order with an empty list of items
     //          if restaurant is not closed based on given currentTime
-    public TakeOutOrder(String name, Calendar currentTime) throws RestaurantClosedException {
-        if (checkRestaurantOpen(currentTime)) {
+    public TakeOutOrder(SushiRestaurant restaurant, Calendar currentTime) throws RestaurantClosedException {
+        if (restaurant.isRestaurantOpen(currentTime)) {
             orders = new ArrayList<>();
-            this.name = name;
+            this.restaurant = restaurant;
         } else {
             throw new RestaurantClosedException("The restaurant is closed.");
         }
@@ -40,19 +40,19 @@ public class TakeOutOrder {
         orders.remove(item);
     }
 
+    public void registerName(String name) {
+        customerName = name;
+    }
+
     // EFFECTS: returns name of customer who ordered the take out
     public String getName() {
-        return name;
+        return customerName;
+    }
+
+    //EFFECTS: returns the name of the restaurant
+    public String getRestaurantName() {
+        return restaurant.getName();
     }
 
 
-    // EFFECTS: returns true if restaurant is open
-    private boolean checkRestaurantOpen(Calendar time) {
-        if (time.get(Calendar.HOUR_OF_DAY) < SushiRestaurant.OPENING_TIME ||
-                time.get(Calendar.HOUR_OF_DAY) >= SushiRestaurant.CLOSING_TIME) {
-            return false;
-        } else {
-            return true;
-        }
-    }
 }

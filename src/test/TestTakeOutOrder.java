@@ -1,7 +1,8 @@
 package test;
 
 import model.SushiRestaurant;
-import ui.TakeOutOrder;
+import org.junit.jupiter.api.BeforeEach;
+import model.TakeOutOrder;
 import model.exceptions.RestaurantClosedException;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +13,12 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public class TestTakeOutOrder {
     private TakeOutOrder testTakeOutOrder;
+    private SushiRestaurant testSushiRes;
+
+    @BeforeEach
+    private void initializeRestaurant() {
+        testSushiRes = new SushiRestaurant("Takeya Sushi");
+    }
 
     // tests whether order can be made when it should be
     @Test
@@ -19,7 +26,7 @@ public class TestTakeOutOrder {
         Calendar time = Calendar.getInstance();
         time.set(Calendar.HOUR_OF_DAY, SushiRestaurant.OPENING_TIME);
         try {
-            testTakeOutOrder = new TakeOutOrder("Anna", time);
+            testTakeOutOrder = new TakeOutOrder(testSushiRes, time);
         } catch (RestaurantClosedException e) {
             fail("RestaurantClosedException should not have been thrown");
         }
@@ -31,10 +38,11 @@ public class TestTakeOutOrder {
         Calendar time = Calendar.getInstance();
         time.set(Calendar.HOUR_OF_DAY, SushiRestaurant.CLOSING_TIME);
         try {
-            testTakeOutOrder = new TakeOutOrder("Anna", time);
+            testTakeOutOrder = new TakeOutOrder(testSushiRes, time);
             fail("Failed to throw RestaurantClosedException");
         } catch (RestaurantClosedException e) {
             // expected
         }
     }
+
 }

@@ -1,14 +1,32 @@
 package ui;
 
 import model.SushiRestaurant;
+import model.TakeOutOrder;
+import model.exceptions.RestaurantClosedException;
+
+import java.util.Calendar;
 
 public class OrderingSystem {
     public static void main(String[] args) {
-        System.out.println("---------Create the Sushi Restaurant---------");
+        System.out.println("---------Creating the Sushi Restaurant---------");
         SushiRestaurant restaurant = new SushiRestaurant("Takeya Sushi");
 
         System.out.println("---------Initializing Menu---------");
         Menu menu = new Menu();
+        Calendar time = Calendar.getInstance();
+
+        TakeOutOrder order = null;
+        try {
+            order = new TakeOutOrder(restaurant, time);
+        } catch (RestaurantClosedException e) {
+            System.out.println("Sorry, we are currently closed. We are open from 11am to 9pm.");
+            System.exit(0);
+            // system should exit at this point
+        }
+
+        InputManager input = new InputManager(order, menu);
+        System.out.println("Welcome to " + restaurant.getName() + "!");
+        input.handleUserInput();
 
         // something like:
         // "Welcome to <insert restaurant name>"
@@ -26,4 +44,5 @@ public class OrderingSystem {
         //
 
     }
+
 }

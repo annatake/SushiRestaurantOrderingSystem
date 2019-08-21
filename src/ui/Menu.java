@@ -14,12 +14,15 @@ public class Menu {
     // initializes the menu by creating menu items
     // food is organized into its the list of its type (sushi, noodle, rice, appetizer)
     public Menu() {
+        initializeAppies();
+        initializeSushiAndCombos();
+        initializeRiceDishes();
+        initializeNoodles();
+        initializeBentos();
+    }
+
+    private void initializeAppies() {
         appies = new ArrayList<>();
-        sushi = new ArrayList<>();
-        comboAndPartyTrays = new ArrayList<>();
-        riceDishes = new ArrayList<>();
-        noodleDishes = new ArrayList<>();
-        bentoBoxes = new ArrayList<>();
 
         Appetizer edamame = new Appetizer(4.50, "Edamame");
         Appetizer gomaae = new Appetizer(3.50, "Gomaae");
@@ -44,6 +47,11 @@ public class Menu {
         appies.add(takoyaki);
         appies.add(salSashimi);
         appies.add(tunaSashimi);
+    }
+
+    private void initializeSushiAndCombos() {
+        sushi = new ArrayList<>();
+        comboAndPartyTrays = new ArrayList<>();
 
         Sushi caliRoll = new Sushi(5.25, "California Roll");
         Sushi avoRoll = new Sushi(4.75, "Avocado Roll");
@@ -69,6 +77,7 @@ public class Menu {
         sushi.add(tamaRoll);
         sushi.add(chickenTeriRoll);
 
+
         ComboAndPartyTray comboA = new ComboAndPartyTray(12.75, "Combo A",
                 caliRoll, dynaRoll, cucRoll);
         ComboAndPartyTray comboB = new ComboAndPartyTray(8.25, "Combo B",
@@ -89,7 +98,10 @@ public class Menu {
         comboAndPartyTrays.add(comboD);
         comboAndPartyTrays.add(spicyCombo);
         comboAndPartyTrays.add(partyTray);
+    }
 
+    private void initializeRiceDishes() {
+        riceDishes = new ArrayList<>();
 
         RiceDish chickenTeriDon = new RiceDish(10.95, "Chicken Teriyaki Don");
         RiceDish beefTeriDon = new RiceDish(10.95, "Beef Teriyaki Don");
@@ -110,6 +122,10 @@ public class Menu {
         riceDishes.add(spyTunaDon);
         riceDishes.add(unagiDon);
         riceDishes.add(katsuCurry);
+    }
+
+    private void initializeNoodles() {
+        noodleDishes = new ArrayList<>();
 
         NoodleDish kitsuneUdon = new NoodleDish(9.75, "Kitsune Udon");
         NoodleDish kakiageUdon = new NoodleDish(9.75, "Kakiage Udon");
@@ -128,6 +144,11 @@ public class Menu {
         noodleDishes.add(nabeUdon);
         noodleDishes.add(yakisoba);
         noodleDishes.add(yakiudon);
+    }
+
+
+    private void initializeBentos() {
+        bentoBoxes = new ArrayList<>();
 
         BentoBox chickenTeriBen = new BentoBox(16.75, "Chicken Teriyaki Bento");
         BentoBox beefTeriBen = new BentoBox(16.75, "Beef Teriyaki Bento");
@@ -142,5 +163,4 @@ public class Menu {
         bentoBoxes.add(sabaBen);
 
     }
-
 }
