@@ -3,8 +3,8 @@ package model;
 public class BentoBox extends Food {
     private boolean brownRice;
 
-    public BentoBox(double price, String name) {
-        super(price, name);
+    public BentoBox(double price, String name, String code) {
+        super(price, name, code);
         brownRice = false;
     }
 

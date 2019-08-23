@@ -5,8 +5,8 @@ public class NoodleDish extends Food {
     private boolean extraNoodles;
     private static final double EXTRA_CHARGE_NOODLES = 3.00;
 
-    public NoodleDish(double price, String name) {
-        super(price, name);
+    public NoodleDish(double price, String name, String code) {
+        super(price, name, code);
         soupSeparate = false;
         extraNoodles = false;
     }

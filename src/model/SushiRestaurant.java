@@ -3,8 +3,8 @@ package model;
 import java.util.Calendar;
 
 public class SushiRestaurant {
-    public static final int OPENING_TIME = 11;
-    public static final int CLOSING_TIME = 21;
+    public static final int OPENING_TIME = 0;
+    public static final int CLOSING_TIME = 24;
 //    public static final int PEAK_TIME_START = 17;
 //    public static final int PEAK_TIME_END = 20;
     // represents the restaurant the customer is ordering from

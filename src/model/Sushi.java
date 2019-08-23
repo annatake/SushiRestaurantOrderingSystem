@@ -4,8 +4,8 @@ public class Sushi extends Food {
     protected boolean brownRice;
 
     // sushi is always with white rice as default
-    public Sushi(double price, String name) {
-        super(price, name);
+    public Sushi(double price, String name, String code) {
+        super(price, name, code);
         brownRice = false;
     }
 

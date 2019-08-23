@@ -49,6 +49,10 @@ public class TakeOutOrder {
         return customerName;
     }
 
+    public ArrayList<Food> getOrders() {
+        return orders;
+    }
+
     //EFFECTS: returns the name of the restaurant
     public String getRestaurantName() {
         return restaurant.getName();

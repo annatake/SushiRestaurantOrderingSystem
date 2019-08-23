@@ -24,7 +24,7 @@ public class OrderingSystem {
             // system should exit at this point
         }
 
-        InputManager input = new InputManager(order, menu);
+        InputHandler input = new InputHandler(order, menu);
         System.out.println("Welcome to " + restaurant.getName() + "!");
         input.handleUserInput();
 
@@ -41,7 +41,7 @@ public class OrderingSystem {
         //  5. Noodle Dishes
         //  6. Bento Boxes  "
         //
-        //
+        // count how many items are in the order list to determine how long the order will take
 
     }
 

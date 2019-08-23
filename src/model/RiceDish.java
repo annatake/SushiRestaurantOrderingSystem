@@ -4,8 +4,8 @@ public class RiceDish extends Food{
     private boolean brownRice;
 
     // rice dishes are always with white rice as default
-    public RiceDish(double price, String name) {
-        super(price, name);
+    public RiceDish(double price, String name, String code) {
+        super(price, name, code);
         brownRice = false;
     }
 
