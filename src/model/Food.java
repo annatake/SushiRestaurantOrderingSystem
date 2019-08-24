@@ -3,9 +3,9 @@ package model;
 public abstract class Food {
 
     protected double price;
-    public int amount;
-    public String name;
-    public String itemCode;
+    protected int amount;
+    protected String name;
+    protected String itemCode;
 
     // REQUIRES: price > 0.00
     public Food(double price, String name, String code) {

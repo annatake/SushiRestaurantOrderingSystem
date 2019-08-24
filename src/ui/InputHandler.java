@@ -1,7 +1,9 @@
 package ui;
 
+import com.sun.xml.internal.ws.util.StringUtils;
 import model.*;
 
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 // Parses user input
@@ -11,6 +13,10 @@ public class InputHandler {
     private static final String CHECK_ORDER_COMMAND = "check";
     private static final String BACK_COMMAND = "back";
     private static final String PLACE_ORDER_COMMAND = "order";
+    private static final double TAX_MULTIPLIER = 1.05;
+    private static final int SHORT_WAIT_TIME = 15;
+    private static final int NORMAL_WAIT_TIME = 20;
+    private static final int LONG_WAIT_TIME = 30;
 
     private Scanner input;
     private boolean programRunning;
@@ -106,11 +112,9 @@ public class InputHandler {
             switch (str) {
                 case "yes":
                     orderConfirmed = true;
-                    placeOrder();
                     break;
                 case "no":
                     orderConfirmed = false;
-                    printMenu();
                     break;
                 default:
                     System.out.println("Sorry, invalid input. Please try again.");
@@ -311,24 +315,81 @@ public class InputHandler {
         parseConfirmation();
     }
 
-    // EFFECTS: checks if order is empty, asks for name, prints out total amount, and places the customers order
+    // EFFECTS: checks if order is empty, asks for name, prints out total amount,
+    //          checks how many items are in the order to estimate how long it will take,
+    //          then places the customers order
+    // TODO: finish this method
     private void placeOrder() {
-        // TODO: finish this method
-    }
-    //
-}
+        if (order.getOrders().size() > 0) {
+            confirmOrder();
+            if (orderConfirmed) {
+                enterName();
+                printTotal();
+                System.out.println("Thank you " + StringUtils.capitalize(order.getName()) +
+                        ", your order has been sent to the kitchen.");
+                System.out.println("Your order will take " + getWaitTime() + " minutes. \nSee you soon!");
+                endProgram();
+            } else {
+                printMenu();
+            }
+        } else {
+            System.out.println("Sorry, you currently have nothing in your order. " +
+                    "\nPlease take a look at the menu.");
+            printMenu();
+        }
 
-// something like:
-// "Welcome to <insert restaurant name>"
-// check if restaurant is open:
-// --> if not open, print "Sorry, we are currently closed. We are open from 11am to 9pm."
-// --> if open, print list of menu categories
-// "Enter the corresponding number to browse our menu:
-//  1. Appetizers
-//  2. Sushi
-//  3. Combos and Party Trays
-//  4. Rice Dishes
-//  5. Noodle Dishes
-//  6. Bento Boxes  "
-//
-//
+    }
+
+    // EFFECTS: asks user to enter their name
+    private void enterName() {
+        System.out.println("Please enter your name:");
+        String name = getUserInputString();
+        order.registerName(name);
+    }
+
+    // EFFECTS: prints out the total of the bill plus tax
+    //          TODO: figure out how to round the total
+    private void printTotal() {
+        double total = 0;
+
+        for (Food f: order.getOrders()) {
+            double itemPrice = f.getPrice() * f.getAmount();
+            total += itemPrice;
+        }
+
+        total = total * TAX_MULTIPLIER;
+
+        System.out.println("Your total is: $" + roundTotal(total));
+    }
+
+    // EFFECTS: calculates the wait time of the order
+    //
+    private int getWaitTime() {
+        int itemCount = 0;
+        for (Food item: order.getOrders()) {
+            itemCount += item.getAmount();
+        }
+
+        if (itemCount <= 5) {
+            return SHORT_WAIT_TIME;
+        } else if (itemCount <= 10) {
+            return NORMAL_WAIT_TIME;
+        } else {
+            return LONG_WAIT_TIME;
+        }
+    }
+
+    // EFFECTS: program stops receiving user input
+    private void endProgram() {
+        System.out.println("-------- Closing Menu --------");
+        programRunning = false;
+        input.close();
+    }
+
+    // EFFECTS: rounds the total to 2 decimal places
+    private String roundTotal(double total) {
+        DecimalFormat df = new DecimalFormat("###.##");
+        return df.format(total);
+    }
+
+}
